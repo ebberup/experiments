@@ -114,11 +114,16 @@ namespace Experiment
                     switch (propdef.valueTable)
                     {
                         case "KeyValueProperties":
+                            if (propdef.)
+                            {
+
+                            }
                             using (var dbConfig = new Experiment_config_DbContext())
                             {
                                 foreach (var kvProp in dbConfig.KeyValueProperties.Where(f => f.key.Equals(propdef.name)).ToList())
                                 {
                                     //noget med at ordne dem efter propid og concatenere alle med csv
+                                    string csv = string.Join(",", kvProp);//det er ikke korrekt, men der hen af .GroupBy(f => f.key)
                                     Console.WriteLine("Property line: " + kvProp.key + "=" + kvProp.value);
                                 }
                             }
