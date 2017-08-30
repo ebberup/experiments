@@ -18,7 +18,7 @@ namespace Experiment
             //Create a new destination (blank for skip)
             Console.Write("Crate a new destination (press enter to skip): ");
             var dest = Console.ReadLine();
-            if (!dest.Equals(""))
+            if (!String.IsNullOrEmpty(dest))
             {
                 Console.Write("Enter path for " + dest + ": ");
                 var destpath = Console.ReadLine();
@@ -28,7 +28,7 @@ namespace Experiment
             //Define a Sepo property( blank for skip)
             Console.Write("Define a new SEPO property. Write Name (press enter to skip): ");
             var propName = Console.ReadLine();
-            if (!propName.Equals(""))
+            if (!String.IsNullOrEmpty(propName))
             {
                 //List lige mulige tabeller for brugeren!
                 Console.Write("Enter source table name for " + propName + ": ");
@@ -47,7 +47,7 @@ namespace Experiment
                 }
                 Console.Write("Map " + propName + " to a destination by typing the Id (press enter to skip): ");
                 var destIdStr = Console.ReadLine();
-                if (!destIdStr.Equals(""))
+                if (!String.IsNullOrEmpty(destIdStr))
                 {
                     Console.Write("Select Value format for " + propName + ": ");
                     Console.Write(ValueFormat.single.ToString());
@@ -72,7 +72,7 @@ namespace Experiment
             //TODO: List lige names fra definitions
             Console.Write("Create a new pair in KeyValueProperties (press enter to skip): ");
             var key = Console.ReadLine();
-            if (!key.Equals(""))
+            if (!String.IsNullOrEmpty(key))
             {
                 Console.Write("Enter value for " + key + ": ");
                 var value = Console.ReadLine();
@@ -102,10 +102,24 @@ namespace Experiment
         {
             using (var db = new Experiment_DbContext())
             {
+                List<Tuple<SamToSepoMapping, ValueFormat>> l = new List<Tuple<SamToSepoMapping, ValueFormat>>(); 
                 Console.WriteLine("Destination name:" + destination.destinationName);
                 Console.WriteLine("Destination path:" + destination.destinationPath);
                 Console.WriteLine("Destination type:" + destination.destinationType.ToString());
                 Console.WriteLine("-----------------");
+
+                var properties = db.SepoProperties.Where(f => f.destinationId.Equals(destination.destinationId));
+                foreach (var prop in properties)
+                {
+
+                    if (prop.valueFormat)
+                    {
+
+                    }
+                }
+
+
+
                 foreach (var propdef in db.SamToSepoMap
                                     .Where(f => f.SepoProperty.destinationId.Equals(destination.destinationId))
                                     .Select(f => f.PropertyDefinition)
