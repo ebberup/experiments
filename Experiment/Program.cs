@@ -108,14 +108,25 @@ namespace Experiment
                 Console.WriteLine("Destination type:" + destination.destinationType.ToString());
                 Console.WriteLine("-----------------");
 
-                var properties = db.SepoProperties.Where(f => f.destinationId.Equals(destination.destinationId));
+                var properties = db.SamToSepoMap.Where(f => f.SepoProperty.destinationId.Equals(destination.destinationId)).Select(f => f.PropertyDefinition);
                 foreach (var prop in properties)
                 {
-
-                    if (prop.valueFormat)
+                    switch (prop.valueFormat)
                     {
+                        case ValueFormat.single:
+                            break;
+                        case ValueFormat.csv:
+                            var k = db.PropertyDefinitions.Where(f=> f.id.Equals(prop.))
+                            string csv = string.Join(",", kvProp);//det er ikke korrekt, men der hen af .GroupBy(f => f.key)
+                            Console.WriteLine("Property line: " + kvProp.key + "=" + kvProp.value);
 
+                            break;
+                        case ValueFormat.file:
+                            break;
+                        default:
+                            break;
                     }
+
                 }
 
 
